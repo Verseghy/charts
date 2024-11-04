@@ -41,11 +41,11 @@ podLabels: {}
 podSecurityContext:
   fsGroup: 2000
 
+# TODO: change this when https://github.com/Verseghy/matverseny-frontend/issues/15 is resolved
 securityContext:
-  capabilities:
-    drop:
-    - ALL
-  # TODO: change this when https://github.com/Verseghy/matverseny-frontend/issues/15 is resolved
+  # capabilities:
+  #   drop:
+  #   - ALL
   readOnlyRootFilesystem: false # true
   runAsNonRoot: false # true
   # runAsUser: 1000
