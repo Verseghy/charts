@@ -44,6 +44,13 @@ spec:
             {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          # TODO: remove this when https://github.com/Verseghy/matverseny-frontend/issues/15 is resolved
+          volumeMounts:
+            - mountPath: /var/cache/nginx/client_temp
+              name: tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
