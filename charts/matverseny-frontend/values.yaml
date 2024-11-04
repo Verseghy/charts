@@ -100,3 +100,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+topologySpreadConstraints:
+  topologyKey: kubernetes.io/hostname
