@@ -70,7 +70,7 @@ spec:
       {{- end }}
       topologySpreadConstraints:
         - maxSkew: 1
-          topologyKey: {{- .Values.topologySpreadConstraints.topologyKey }}
+          topologyKey: {{ .Values.topologySpreadConstraints.topologyKey }}
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
