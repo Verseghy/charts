@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "iam-mysql.fullname" . }}
+  labels:
+    {{- include "iam-mysql.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "iam-mysql.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "iam-mysql.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "iam-mysql.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "iam-mysql.fullname" . }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.mysql.repository }}:{{ .Values.image.mysql.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.mysql.pullPolicy }}
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: {{ include "iam-mysql.fullname" . }}-data
+              mountPath: /var/lib/mysql
+          envFrom:
+            - secretRef:
+                name: mysql
+          env:
+            - name: DATABASE_URL
+              value: mysql://root:$(MYSQL_ROOT_PASSWORD)@mysql/iam
+      volumes:
+        - name: {{ include "iam-mysql.fullname" . }}-data
+          persistentVolumeClaim:
+            claimName: {{ include "iam-mysql.fullname" . }}

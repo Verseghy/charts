@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "iam-setup.fullname" . }}
+  labels:
+    {{- include "iam-setup.labels" . | nindent 4 }}
+spec:
+  backoffLimit: 100
+  selector:
+    matchLabels:
+      {{- include "iam-setup.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "iam-setup.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "iam-setup.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "iam-setup.fullname" . }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.setup.repository }}:{{ .Values.image.setup.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.setup.pullPolicy }}
+          env:
+            - name: DATABASE_URL
+              value: mysql://root@mysql/iam
+            - name: IAM_URL
+              value: "http://iam:{{ .Values.service.port }}""
+      restartPolicy: OnFailure

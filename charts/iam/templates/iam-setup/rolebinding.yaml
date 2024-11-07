@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "iam-setup.fullname" . }}
+  labels:
+    {{- include "iam-setup.labels" . | nindent 4 }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "iam-setup.serviceAccountName" . }}
+roleRef:
+  kind: Role
+  name: {{ include "iam-setup.fullname" . }}
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "iam-migration.fullname" . }}
+  labels:
+    {{- include "iam-migration.labels" . | nindent 4 }}
+spec:
+  backoffLimit: 100
+  selector:
+    matchLabels:
+      {{- include "iam-migration.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "iam-migration.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "iam-migration.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "iam-migration.fullname" . }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.migration.repository }}:{{ .Values.image.migration.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.migration.pullPolicy }}
+
+          envFrom:
+            - secretRef:
+                name: mysql
+          env:
+            - name: DATABASE_URL
+              value: mysql://root:$(MYSQL_ROOT_PASSWORD)@mysql/iam
+      restartPolicy: OnFailure
