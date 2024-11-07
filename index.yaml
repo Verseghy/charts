@@ -3,6 +3,16 @@ entries:
   iam:
   - apiVersion: v2
     appVersion: v0.0.1
+    created: "2024-11-07T08:52:17.967057025Z"
+    description: A Helm chart for Kubernetes
+    digest: a4deb3fd9d92efbf979fcab07b567de866fd1ed845f0d42bc464aa2e90c83ffb
+    name: iam
+    type: application
+    urls:
+    - https://github.com/Verseghy/charts/releases/download/iam-0.1.5/iam-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: v0.0.1
     created: "2024-11-07T08:46:18.236201448Z"
     description: A Helm chart for Kubernetes
     digest: aae3230572b88682f02f69e7fbe167002998db3fdb2a71bc545e396d91a78011
@@ -162,4 +172,4 @@ entries:
     urls:
     - https://github.com/Verseghy/charts/releases/download/matverseny-frontend-0.1.1/matverseny-frontend-0.1.1.tgz
     version: 0.1.1
-generated: "2024-11-07T08:46:18.236241953Z"
+generated: "2024-11-07T08:52:17.967098211Z"
