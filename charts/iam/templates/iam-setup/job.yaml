@@ -29,7 +29,7 @@ spec:
           imagePullPolicy: {{ .Values.image.setup.pullPolicy }}
           env:
             - name: DATABASE_URL
-              value: mysql://root@mysql/iam
+              value: mysql://root@{{ include "iam-mysql.fullname" . }}/iam
             - name: IAM_URL
               value: "http://iam:{{ .Values.service.port }}"
       restartPolicy: OnFailure

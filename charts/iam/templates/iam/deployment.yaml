@@ -58,7 +58,7 @@ spec:
                 name: mysql
           env:
             - name: DATABASE_URL
-              value: mysql://root:$(MYSQL_ROOT_PASSWORD)@mysql/iam
+              value: mysql://root:$(MYSQL_ROOT_PASSWORD)@{{ include "iam-mysql.fullname" . }}/iam
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}

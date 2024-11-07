@@ -42,13 +42,14 @@ spec:
           volumeMounts:
             - name: {{ include "iam-mysql.fullname" . }}-data
               mountPath: /var/lib/mysql
+            - name: {{ include "iam-mysql.fullname" . }}-tmp
+              mountPath: /tmp
           envFrom:
             - secretRef:
                 name: mysql
-          env:
-            - name: DATABASE_URL
-              value: mysql://root:$(MYSQL_ROOT_PASSWORD)@mysql/iam
       volumes:
         - name: {{ include "iam-mysql.fullname" . }}-data
           persistentVolumeClaim:
             claimName: {{ include "iam-mysql.fullname" . }}
+        - name: {{ include "iam-mysql.fullname" . }}-tmp
+          emptyDir: {}
