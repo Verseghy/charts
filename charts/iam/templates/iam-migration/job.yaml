@@ -6,9 +6,6 @@ metadata:
     {{- include "iam-migration.labels" . | nindent 4 }}
 spec:
   backoffLimit: 100
-  selector:
-    matchLabels:
-      {{- include "iam-migration.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
