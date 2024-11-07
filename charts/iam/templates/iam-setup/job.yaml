@@ -34,5 +34,5 @@ spec:
             - name: DATABASE_URL
               value: mysql://root@mysql/iam
             - name: IAM_URL
-              value: "http://iam:{{ .Values.service.port }}""
+              value: "http://iam:{{ .Values.service.port }}"
       restartPolicy: OnFailure
