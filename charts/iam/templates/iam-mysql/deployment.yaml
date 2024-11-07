@@ -32,8 +32,8 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ include "iam-mysql.fullname" . }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+          # securityContext:
+          #   {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.mysql.repository }}:{{ .Values.image.mysql.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.mysql.pullPolicy }}
           ports:
