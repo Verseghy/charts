@@ -32,4 +32,8 @@ spec:
               value: mysql://root@{{ include "iam-mysql.fullname" . }}/iam
             - name: IAM_URL
               value: "http://iam:{{ .Values.service.port }}"
+          command:
+            - setup
+            - "--iam $(IAM_URL)"
+            - "--database $(DATABASE_URL)"
       restartPolicy: OnFailure
