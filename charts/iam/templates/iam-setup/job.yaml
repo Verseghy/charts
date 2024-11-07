@@ -33,6 +33,7 @@ spec:
             - name: IAM_URL
               value: "http://iam:{{ .Values.service.port }}"
           command:
+            - iam-cli
             - setup
             - "--iam $(IAM_URL)"
             - "--database $(DATABASE_URL)"
