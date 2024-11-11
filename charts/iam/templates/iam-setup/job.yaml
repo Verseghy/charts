@@ -38,8 +38,4 @@ spec:
           command:
             - iam-cli
             - setup
-            - "--iam"
-            - $(IAM_URL)
-            - "--database"
-            - $(DATABASE_URL)"
       restartPolicy: OnFailure

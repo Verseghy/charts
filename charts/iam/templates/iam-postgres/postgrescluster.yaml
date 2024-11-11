@@ -31,5 +31,5 @@ spec:
   postgresVersion: 16
   users:
     - databases:
-        - iam
-      name: iam
+        - {{ include "iam-postgres.username" }}
+      name: {{ include "iam-postgres.username" }}

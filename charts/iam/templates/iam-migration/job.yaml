@@ -33,4 +33,6 @@ spec:
                 secretKeyRef:
                   name: iam-iam-postgres-pguser-iam
                   key: uri
+            - name: DATABASE_SCHEMA
+              value: {{ include "iam-postgres.username" }}
       restartPolicy: OnFailure
