@@ -31,6 +31,6 @@ spec:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
-                  name: iam-iam-postgres-user-iam
+                  name: iam-iam-postgres-pguser-iam
                   key: uri
       restartPolicy: OnFailure

@@ -2,7 +2,7 @@
 Expand the name of the chart.
 */}}
 {{- define "iam-postgres.name" -}}
-{{- print (default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-") "-mysql" }}
+{{- print (default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-") "-postgres" }}
 {{- end }}
 
 {{/*
@@ -14,7 +14,7 @@ If release name contains chart name it will be used as a full name.
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := print (default .Chart.Name .Values.nameOverride) "-mysql" }}
+{{- $name := print (default .Chart.Name .Values.nameOverride) "-postgres" }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -27,7 +27,7 @@ If release name contains chart name it will be used as a full name.
 Create chart name and version as used by the chart label.
 */}}
 {{- define "iam-postgres.chart" -}}
-{{- printf "%s-mysql-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-postgres-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
