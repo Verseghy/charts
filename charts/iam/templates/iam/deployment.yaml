@@ -35,8 +35,9 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
+          {{/* TODO: once audit events fixed, re-add this
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- toYaml .Values.securityContext | nindent 12 }}*/}}
           image: "{{ .Values.image.iam.repository }}:{{ .Values.image.iam.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.iam.pullPolicy }}
           ports:
@@ -53,12 +54,12 @@ spec:
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          envFrom:
-            - secretRef:
-                name: mysql
           env:
             - name: DATABASE_URL
-              value: mysql://root:$(MYSQL_ROOT_PASSWORD)@{{ include "iam-mysql.fullname" . }}/iam
+              valueFrom:
+                secretKeyRef:
+                  name: iam-iam-postgres-user-iam
+                  key: uri
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
@@ -81,4 +82,4 @@ spec:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-                    {{- include "iam.selectorLabels" . | nindent 14 }}
+              {{- include "iam.selectorLabels" . | nindent 14 }}

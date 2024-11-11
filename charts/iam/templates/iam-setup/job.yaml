@@ -29,7 +29,10 @@ spec:
           imagePullPolicy: {{ .Values.image.setup.pullPolicy }}
           env:
             - name: DATABASE_URL
-              value: mysql://root@{{ include "iam-mysql.fullname" . }}/iam
+              valueFrom:
+                secretKeyRef:
+                  name: iam-iam-postgres-user-iam
+                  key: uri
             - name: IAM_URL
               value: "http://iam:{{ .Values.service.port }}"
           command:

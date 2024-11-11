@@ -27,11 +27,10 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.migration.repository }}:{{ .Values.image.migration.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.migration.pullPolicy }}
-
-          envFrom:
-            - secretRef:
-                name: mysql
           env:
             - name: DATABASE_URL
-              value: mysql://root:$(MYSQL_ROOT_PASSWORD)@{{ include "iam-mysql.fullname" . }}/iam
+              valueFrom:
+                secretKeyRef:
+                  name: iam-iam-postgres-user-iam
+                  key: uri
       restartPolicy: OnFailure

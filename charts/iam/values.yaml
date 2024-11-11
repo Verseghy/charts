@@ -26,11 +26,11 @@ image:
     # Overrides the image tag whose default is the chart appVersion.
     tag: ""
   mysql:
-    repository: harbor.apps.okd4.home.zoltanszepesi.com/library/mysql
+    repository: mysql
     # This sets the pull policy for images.
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "latest"
+    tag: "8"
 
 # This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -105,13 +105,13 @@ resources: {}
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
   httpGet:
-    path: /
+    path: /ready
     port: http
   initialDelaySeconds: 300
   failureThreshold: 5
 readinessProbe:
   httpGet:
-    path: /
+    path: /ready
     port: http
   initialDelaySeconds: 10
   timeoutSeconds: 5
@@ -138,5 +138,8 @@ affinity: {}
 topologySpreadConstraints:
   topologyKey: kubernetes.io/hostname
 
-mysql:
-  storage: 1Gi
+database:
+  main:
+    storage: 1Gi
+  backup:
+    storage: 1Gi
