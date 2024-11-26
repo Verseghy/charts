@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://verseghy.github.io/charts/
     chart: iam
-    targetRevision: 0.1.17
+    targetRevision: 0.1.18
     helm:
       valuesObject:
         ingress:
