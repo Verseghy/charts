@@ -18,7 +18,9 @@ spec:
           hosts:
             - host: iam.{{ .Values.hostname }}
               paths:
-                - path: /
+                - path: /v1/
+                  pathType: ImplementationSpecific
+                - path: /.well-known/
                   pathType: ImplementationSpecific
           tls:
             - hosts:
