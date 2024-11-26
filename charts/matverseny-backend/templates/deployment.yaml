@@ -75,4 +75,4 @@ spec:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              {{- include "iam.selectorLabels" . | nindent 14 }}
+              {{- include "matverseny-backend.selectorLabels" . | nindent 14 }}
