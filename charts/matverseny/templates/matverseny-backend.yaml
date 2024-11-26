@@ -1,31 +1,32 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: matverseny-iam
+  name: matverseny-backend
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
     repoURL: https://verseghy.github.io/charts/
-    chart: iam
-    targetRevision: 0.1.15
+    chart: matverseny-backend
+    targetRevision: 0.1.1
     helm:
       valuesObject:
         ingress:
           annotations:
             cert-manager.io/issuer: letsencrypt-prod
+          enabled: true
           hosts:
-            - host: iam.{{ .Values.hostname }}
+            - host: api.{{ .Values.hostname }}
               paths:
                 - path: /
                   pathType: ImplementationSpecific
           tls:
             - hosts:
-                - iam.{{ .Values.hostname }}
-              secretName: matverseny-iam-tls
+                - api.{{ .Values.hostname }}
+              secretName: matverseny-frontend-tls
   destination:
-    namespace: {{ .Values.namespace }}
     server: https://kubernetes.default.svc
+    namespace: {{ .Values.namespace }}
   syncPolicy:
     automated: {}
