@@ -1,0 +1,35 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: {{ include "matverseny-backend-postgres.fullname" . }}
+  annotations:
+    postgres-operator.crunchydata.com/autoCreateUserSchema: 'true'
+  labels:
+    {{- include "matverseny-backend-postgres.labels" . | nindent 4 }}
+spec:
+  backups:
+    pgbackrest:
+      repos:
+        - name: repo1
+          volume:
+            volumeClaimSpec:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: {{ .Values.database.backup.storage }}
+  instances:
+    - dataVolumeClaimSpec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.database.main.storage }}
+      name: instance1
+      replicas: 3
+  port: 5432
+  postgresVersion: 16
+  users:
+    - databases:
+        - {{ include "matverseny-backend-postgres.username" . }}
+      name: {{ include "matverseny-backend-postgres.username" . }}

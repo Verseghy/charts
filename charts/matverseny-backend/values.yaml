@@ -7,11 +7,24 @@ replicaCount: 3
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: ghcr.io/verseghy/matverseny-backend
-  # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  matversenyBackend:
+    repository: ghcr.io/verseghy/matverseny-backend
+    # This sets the pull policy for images.
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  migration:
+    repository: ghcr.io/verseghy/matverseny-migration
+    # This sets the pull policy for images.
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  setup:
+    repository: ghcr.io/verseghy/matverseny-setup
+    # This sets the pull policy for images.
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
 
 # This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []

@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "matverseny-backend-migration.fullname" . }}
+  labels:
+    {{- include "matverseny-backend-migration.labels" . | nindent 4 }}
+spec:
+  backoffLimit: 100
+  template:
+    metadata:
+      labels:
+        {{- include "matverseny-backend-migration.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "matverseny-backend-migration.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "matverseny-backend-migration.fullname" . }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.migration.repository }}:{{ .Values.image.migration.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.migration.pullPolicy }}
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: matverseny-backend-matverseny-backend-postgres-pguser-matverseny-backend
+                  key: uri
+            - name: DATABASE_SCHEMA
+              value: {{ include "matverseny-backend-postgres.username" . }}
+      restartPolicy: OnFailure

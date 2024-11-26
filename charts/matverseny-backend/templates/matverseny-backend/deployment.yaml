@@ -37,8 +37,8 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.image.matversenyBackend.repository }}:{{ .Values.image.matversenyBackend.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.matversenyBackend.pullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
@@ -53,6 +53,21 @@ spec:
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: matverseny-backend-matverseny-backend-postgres-pguser-matverseny-backend
+                  key: uri
+            - name: IAM_URL
+              value: "http://matverseny-iam:3001/"
+            - name: IAM_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: matverseny-app
+                  key: iam_secret
+            - name: NATS_URL
+              value: "matverseny-nats"
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}

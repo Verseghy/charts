@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "matverseny-backend-setup.fullname" . }}
+  labels:
+    {{- include "matverseny-backend-setup.labels" . | nindent 4 }}
+spec:
+  backoffLimit: 100
+  template:
+    metadata:
+      labels:
+        {{- include "matverseny-backend-setup.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "matverseny-backend-setup.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "matverseny-backend-setup.fullname" . }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.setup.repository }}:{{ .Values.image.setup.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.setup.pullPolicy }}
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: matverseny-iam-iam-postgres-pguser-iam
+                  key: uri
+      restartPolicy: OnFailure
