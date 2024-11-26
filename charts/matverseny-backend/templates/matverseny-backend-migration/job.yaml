@@ -31,7 +31,7 @@ spec:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
-                  name: matverseny-backend-matverseny-backend-postgres-pguser-matverseny-backend
+                  name: matverseny-backend-postgres-pguser-matverseny-backend
                   key: uri
             - name: DATABASE_SCHEMA
               value: {{ include "matverseny-backend-postgres.username" . }}
