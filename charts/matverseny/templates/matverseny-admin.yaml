@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: matverseny-admin
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://verseghy.github.io/charts/
+    chart: matverseny-admin
+    targetRevision: 0.1.0
+    helm:
+      valuesObject:
+        ingress:
+          annotations:
+            cert-manager.io/issuer: letsencrypt-prod
+          enabled: true
+          hosts:
+            - host: admin.{{ .Values.hostname }}
+              paths:
+                - path: /
+                  pathType: ImplementationSpecific
+          tls:
+            - hosts:
+                - admin.{{ .Values.hostname }}
+              secretName: matverseny-admin-tls
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ .Values.namespace }}
+  syncPolicy:
+    automated: {}
