@@ -193,6 +193,15 @@ entries:
     version: 0.1.1
   matverseny:
   - apiVersion: v2
+    created: "2024-12-02T00:39:02.321490286Z"
+    description: A Helm chart for Kubernetes
+    digest: 8b53954b6ac6bcd6f5c30425d7309c696235d6e90e67d9bac270f9a3f542f2da
+    name: matverseny
+    type: application
+    urls:
+    - https://github.com/Verseghy/charts/releases/download/matverseny-0.1.13/matverseny-0.1.13.tgz
+    version: 0.1.13
+  - apiVersion: v2
     created: "2024-12-01T23:37:09.887484118Z"
     description: A Helm chart for Kubernetes
     digest: 39c575ec3f5b3b1c4fdcc1acd3eff50090a7d0acb72bb38de4e49fde1fe6736f
@@ -513,4 +522,4 @@ entries:
     urls:
     - https://github.com/Verseghy/charts/releases/download/matverseny-frontend-0.1.1/matverseny-frontend-0.1.1.tgz
     version: 0.1.1
-generated: "2024-12-01T23:37:09.99445425Z"
+generated: "2024-12-02T00:39:02.321685152Z"
