@@ -60,6 +60,9 @@ spec:
                 secretKeyRef:
                   name: iam-postgres-pguser-iam
                   key: uri
+          envFrom:
+            - secretRef:
+                name: iam-jwt
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
