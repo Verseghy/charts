@@ -34,5 +34,5 @@ spec:
                   name: iam-postgres-pguser-iam
                   key: uri
             - name: IAM_URL
-              value: "http://matverseny-iam:3001/"
+              value: "http://matverseny-iam:3001"
       restartPolicy: OnFailure

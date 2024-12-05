@@ -60,7 +60,7 @@ spec:
                   name: matverseny-backend-postgres-pguser-matverseny-backend
                   key: uri
             - name: IAM_URL
-              value: "http://matverseny-iam:3001/"
+              value: "http://matverseny-iam:3001"
             - name: IAM_APP_SECRET
               valueFrom:
                 secretKeyRef:
