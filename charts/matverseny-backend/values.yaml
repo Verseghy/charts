@@ -73,7 +73,10 @@ service:
 ingress:
   enabled: false
   className: ""
-  annotations: {}
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "43200"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "43200"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "43200"
   hosts:
     - host: chart-example.local
       paths:
