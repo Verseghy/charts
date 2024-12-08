@@ -233,6 +233,15 @@ entries:
     version: 0.1.1
   matverseny:
   - apiVersion: v2
+    created: "2024-12-08T04:21:13.468043595Z"
+    description: A Helm chart for Kubernetes
+    digest: 73d8501fb7ffee3523550bc1522e77a29b3933a16a1999b54643ac6a9559a729
+    name: matverseny
+    type: application
+    urls:
+    - https://github.com/Verseghy/charts/releases/download/matverseny-0.1.28/matverseny-0.1.28.tgz
+    version: 0.1.28
+  - apiVersion: v2
     created: "2024-12-08T03:57:59.929960735Z"
     description: A Helm chart for Kubernetes
     digest: f081fe58d2236cec0099a589566494b8ffaa5b9ee4521de90888e9c318ba44be
@@ -487,6 +496,16 @@ entries:
     version: 0.1.0
   matverseny-admin:
   - apiVersion: v2
+    appVersion: v5
+    created: "2024-12-08T04:21:13.673314974Z"
+    description: A Helm chart for Kubernetes
+    digest: 808cf4c0b450d7a01922e8bd9ed3b3201b36bbe7f2ec92c63563f1dc060efb58
+    name: matverseny-admin
+    type: application
+    urls:
+    - https://github.com/Verseghy/charts/releases/download/matverseny-admin-0.1.6/matverseny-admin-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
     appVersion: v4
     created: "2024-12-08T03:52:42.520565539Z"
     description: A Helm chart for Kubernetes
@@ -679,6 +698,16 @@ entries:
     version: 0.1.0
   matverseny-frontend:
   - apiVersion: v2
+    appVersion: v2
+    created: "2024-12-08T04:21:13.874339471Z"
+    description: A Helm chart for Kubernetes
+    digest: c8d977017cabc57b229cc36a4d38c45b8afecd043ab35fd1cb26523b92508567
+    name: matverseny-frontend
+    type: application
+    urls:
+    - https://github.com/Verseghy/charts/releases/download/matverseny-frontend-0.1.16/matverseny-frontend-0.1.16.tgz
+    version: 0.1.16
+  - apiVersion: v2
     appVersion: v1
     created: "2024-12-08T03:58:00.047112076Z"
     description: A Helm chart for Kubernetes
@@ -818,4 +847,4 @@ entries:
     urls:
     - https://github.com/Verseghy/charts/releases/download/matverseny-frontend-0.1.1/matverseny-frontend-0.1.1.tgz
     version: 0.1.1
-generated: "2024-12-08T03:58:00.047497527Z"
+generated: "2024-12-08T04:21:13.87486964Z"
