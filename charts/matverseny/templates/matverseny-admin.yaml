@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://verseghy.github.io/charts/
     chart: matverseny-admin
-    targetRevision: 0.1.5
+    targetRevision: 0.1.6
     helm:
       valuesObject:
         ingress:
