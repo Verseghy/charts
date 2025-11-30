@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - iam.matverseny.apps.okd4.home.zoltanszepesi.com
+        - HOSTNAME
       secretName: iam-tls
   rules:
-    - host: iam.matverseny.apps.okd4.home.zoltanszepesi.com
+    - host: HOSTNAME
       http:
         paths:
           - path: /v1/

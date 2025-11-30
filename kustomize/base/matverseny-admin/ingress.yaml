@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - admin.matverseny.apps.okd4.home.zoltanszepesi.com
+        - HOSTNAME
       secretName: matverseny-admin-tls
   rules:
-    - host: admin.matverseny.apps.okd4.home.zoltanszepesi.com
+    - host: HOSTNAME
       http:
         paths:
           - path: /
