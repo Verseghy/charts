@@ -31,7 +31,8 @@ spec:
             capabilities:
               drop:
               - ALL
-            readOnlyRootFilesystem: true
+            # IAM needs to fix audit logs for this to be enabled
+            readOnlyRootFilesystem: false
             runAsNonRoot: true
             runAsUser: 1000
           image: ghcr.io/verseghy/iam:v8
