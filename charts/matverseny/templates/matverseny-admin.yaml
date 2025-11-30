@@ -26,7 +26,7 @@ spec:
                 - admin.{{ .Values.hostname }}
               secretName: matverseny-admin-tls
   destination:
-    server: https://kubernetes.default.svc
+    server: verseghy-matverseny
     namespace: {{ .Values.namespace }}
   syncPolicy:
     automated: {}

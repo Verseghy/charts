@@ -29,6 +29,6 @@ spec:
               secretName: matverseny-iam-tls
   destination:
     namespace: {{ .Values.namespace }}
-    server: https://kubernetes.default.svc
+    server: verseghy-matverseny
   syncPolicy:
     automated: {}

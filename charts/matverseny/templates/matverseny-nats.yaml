@@ -17,7 +17,7 @@ spec:
         - name: config.cluster.enabled
           value: 'true'
   destination:
-    server: https://kubernetes.default.svc
+    server: verseghy-matverseny
     namespace: {{ .Values.namespace }}
   syncPolicy:
     automated: {}

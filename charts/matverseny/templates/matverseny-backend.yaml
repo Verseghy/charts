@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://verseghy.github.io/charts/
     chart: matverseny-backend
-    targetRevision: 0.1.14
+    targetRevision: 0.1.15
     helm:
       valuesObject:
         ingress:
@@ -26,7 +26,7 @@ spec:
                 - api.{{ .Values.hostname }}
               secretName: matverseny-backend-tls
   destination:
-    server: https://kubernetes.default.svc
+    server: verseghy-matverseny
     namespace: {{ .Values.namespace }}
   syncPolicy:
     automated: {}
