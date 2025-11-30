@@ -28,7 +28,7 @@ spec:
                 - iam.{{ .Values.hostname }}
               secretName: matverseny-iam-tls
   destination:
+    name: verseghy-matverseny
     namespace: {{ .Values.namespace }}
-    server: verseghy-matverseny
   syncPolicy:
     automated: {}

@@ -17,7 +17,7 @@ spec:
         - name: config.cluster.enabled
           value: 'true'
   destination:
-    server: verseghy-matverseny
+    name: verseghy-matverseny
     namespace: {{ .Values.namespace }}
   syncPolicy:
     automated: {}
