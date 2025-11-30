@@ -27,14 +27,14 @@ spec:
         fsGroup: 2000
       containers:
         - name: iam
-          securityContext:
-            capabilities:
-              drop:
-              - ALL
+          securityContext: {}
             # IAM needs to fix audit logs for this to be enabled
-            readOnlyRootFilesystem: false
-            runAsNonRoot: true
-            runAsUser: 1000
+            # capabilities:
+            #   drop:
+            #   - ALL
+            # readOnlyRootFilesystem: true
+            # runAsNonRoot: true
+            # runAsUser: 1000
           image: ghcr.io/verseghy/iam:v8
           imagePullPolicy: IfNotPresent
           ports:
