@@ -1,7 +1,7 @@
 - op: replace
   path: /spec/tls/0/hosts/0
-  value: iam.matverseny.apps.okd4.home.zoltanszepesi.com
+  value: iam.195.verseghy-gimnazium.net
 - op: replace
   path: /spec/rules/0/host
-  value: iam.matverseny.apps.okd4.home.zoltanszepesi.com
+  value: iam.195.verseghy-gimnazium.net
 
