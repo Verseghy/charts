@@ -6,6 +6,7 @@ resources:
   - service.yaml
   - serviceaccount.yaml
   - ingress.yaml
+  - issuer.yaml
   - migration-job.yaml
   - migration-serviceaccount.yaml
   - setup-job.yaml
