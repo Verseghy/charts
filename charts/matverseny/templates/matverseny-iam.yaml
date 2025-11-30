@@ -32,3 +32,6 @@ spec:
     namespace: {{ .Values.namespace }}
   syncPolicy:
     automated: {}
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
