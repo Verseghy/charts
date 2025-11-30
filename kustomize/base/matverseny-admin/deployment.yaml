@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matverseny-admin
+  labels:
+    app.kubernetes.io/name: matverseny-admin
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: matverseny-admin
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: matverseny-admin
+    spec:
+      serviceAccountName: matverseny-admin
+      securityContext:
+        fsGroup: 2000
+      containers:
+        - name: matverseny-admin
+          # TODO: change this when https://github.com/Verseghy/verseghy-admin/issues/5 is resolved
+          securityContext: {}
+          image: ghcr.io/verseghy/matverseny-admin:v6
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          volumeMounts:
+            - mountPath: /var/cache/nginx/client_temp
+              name: tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: matverseny-admin
+

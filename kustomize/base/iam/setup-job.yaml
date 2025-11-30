@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: iam-setup
+  labels:
+    app.kubernetes.io/name: iam
+    app.kubernetes.io/component: setup
+spec:
+  backoffLimit: 100
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: iam
+        app.kubernetes.io/component: setup
+    spec:
+      serviceAccountName: iam-setup
+      securityContext:
+        fsGroup: 2000
+      containers:
+        - name: iam-setup
+          image: ghcr.io/verseghy/iam-cli:v8
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: iam-postgres-pguser-iam
+                  key: uri
+            - name: IAM_URL
+              value: "http://iam:3001"
+          command:
+            - iam-cli
+            - setup
+      restartPolicy: OnFailure
+

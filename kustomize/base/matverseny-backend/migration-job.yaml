@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: matverseny-backend-migration
+  labels:
+    app.kubernetes.io/name: matverseny-backend
+    app.kubernetes.io/component: migration
+spec:
+  backoffLimit: 100
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: matverseny-backend
+        app.kubernetes.io/component: migration
+    spec:
+      serviceAccountName: matverseny-backend-migration
+      securityContext:
+        fsGroup: 2000
+      containers:
+        - name: matverseny-backend-migration
+          image: ghcr.io/verseghy/matverseny-migration:v7
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: matverseny-backend-postgres-pguser-matverseny-backend
+                  key: uri
+            - name: DATABASE_SCHEMA
+              value: matverseny-backend
+      restartPolicy: OnFailure
+

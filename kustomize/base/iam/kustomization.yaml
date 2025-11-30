@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - deployment.yaml
+  - service.yaml
+  - serviceaccount.yaml
+  - migration-job.yaml
+  - migration-serviceaccount.yaml
+  - setup-job.yaml
+  - setup-serviceaccount.yaml
+  - setup-role.yaml
+  - setup-rolebinding.yaml
+  - postgres.yaml
+
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: matverseny
+

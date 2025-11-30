@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: matverseny-admin
+  annotations:
+    cert-manager.io/issuer: letsencrypt-prod
+  labels:
+    app.kubernetes.io/name: matverseny-admin
+spec:
+  tls:
+    - hosts:
+        - admin.matverseny.apps.okd4.home.zoltanszepesi.com
+      secretName: matverseny-admin-tls
+  rules:
+    - host: admin.matverseny.apps.okd4.home.zoltanszepesi.com
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: matverseny-admin
+                port:
+                  number: 80
+

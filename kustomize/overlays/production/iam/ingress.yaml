@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: iam
+  annotations:
+    cert-manager.io/issuer: letsencrypt-prod
+  labels:
+    app.kubernetes.io/name: iam
+    app.kubernetes.io/component: api
+spec:
+  tls:
+    - hosts:
+        - iam.matverseny.apps.okd4.home.zoltanszepesi.com
+      secretName: iam-tls
+  rules:
+    - host: iam.matverseny.apps.okd4.home.zoltanszepesi.com
+      http:
+        paths:
+          - path: /v1/
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: iam
+                port:
+                  number: 3001
+          - path: /.well-known/
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: iam
+                port:
+                  number: 3001
+

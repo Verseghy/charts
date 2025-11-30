@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: matverseny-backend-setup
+  labels:
+    app.kubernetes.io/name: matverseny-backend
+    app.kubernetes.io/component: setup
+spec:
+  backoffLimit: 100
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: matverseny-backend
+        app.kubernetes.io/component: setup
+    spec:
+      serviceAccountName: matverseny-backend-setup
+      securityContext:
+        fsGroup: 2000
+      containers:
+        - name: matverseny-backend-setup
+          image: ghcr.io/verseghy/matverseny-setup:v7
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: iam-postgres-pguser-iam
+                  key: uri
+            - name: IAM_URL
+              value: "http://iam:3001"
+      restartPolicy: OnFailure
+

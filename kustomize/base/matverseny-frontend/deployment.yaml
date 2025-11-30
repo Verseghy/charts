@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matverseny-frontend
+  labels:
+    app.kubernetes.io/name: matverseny-frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: matverseny-frontend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: matverseny-frontend
+    spec:
+      serviceAccountName: matverseny-frontend
+      securityContext:
+        fsGroup: 2000
+      containers:
+        - name: matverseny-frontend
+          # TODO: change this when https://github.com/Verseghy/matverseny-frontend/issues/15 is resolved
+          securityContext:
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          image: ghcr.io/verseghy/matverseny-frontend:v2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          volumeMounts:
+            - mountPath: /var/cache/nginx/client_temp
+              name: tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: matverseny-frontend
+

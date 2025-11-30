@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: matverseny-backend-setup
+  labels:
+    app.kubernetes.io/name: matverseny-backend
+    app.kubernetes.io/component: setup
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - get
+      - create
+      - patch
+

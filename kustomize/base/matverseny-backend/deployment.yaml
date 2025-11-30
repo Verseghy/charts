@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matverseny-backend
+  labels:
+    app.kubernetes.io/name: matverseny-backend
+    app.kubernetes.io/component: api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: matverseny-backend
+      app.kubernetes.io/component: api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: matverseny-backend
+        app.kubernetes.io/component: api
+    spec:
+      serviceAccountName: matverseny-backend
+      securityContext:
+        fsGroup: 2000
+      containers:
+        - name: matverseny-backend
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          image: ghcr.io/verseghy/matverseny-backend:v7
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3002
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: matverseny-backend-postgres-pguser-matverseny-backend
+                  key: uri
+            - name: IAM_URL
+              value: "http://iam:3001"
+            - name: IAM_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: matverseny-app
+                  key: iam_secret
+            - name: NATS_URL
+              value: "nats"
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: matverseny-backend
+              app.kubernetes.io/component: api
+

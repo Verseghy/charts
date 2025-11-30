@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: iam-migration
+  labels:
+    app.kubernetes.io/name: iam
+    app.kubernetes.io/component: migration
+spec:
+  backoffLimit: 100
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: iam
+        app.kubernetes.io/component: migration
+    spec:
+      serviceAccountName: iam-migration
+      securityContext:
+        fsGroup: 2000
+      containers:
+        - name: iam-migration
+          image: ghcr.io/verseghy/iam-migration:v8
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: iam-postgres-pguser-iam
+                  key: uri
+            - name: DATABASE_SCHEMA
+              value: iam
+      restartPolicy: OnFailure
+

@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: matverseny-backend
+  annotations:
+    cert-manager.io/issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "43200"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "43200"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "43200"
+  labels:
+    app.kubernetes.io/name: matverseny-backend
+    app.kubernetes.io/component: api
+spec:
+  tls:
+    - hosts:
+        - api.matverseny.apps.okd4.home.zoltanszepesi.com
+      secretName: matverseny-backend-tls
+  rules:
+    - host: api.matverseny.apps.okd4.home.zoltanszepesi.com
+      http:
+        paths:
+          - path: /v1/
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: matverseny-backend
+                port:
+                  number: 3002
+
