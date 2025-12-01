@@ -18,7 +18,7 @@ spec:
         fsGroup: 2000
       containers:
         - name: iam-setup
-          image: ghcr.io/verseghy/iam-cli:v8
+          image: ghcr.io/verseghy/iam-cli:0.0.15
           imagePullPolicy: IfNotPresent
           securityContext:
             capabilities:

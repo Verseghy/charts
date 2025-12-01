@@ -34,7 +34,7 @@ spec:
             readOnlyRootFilesystem: true
             runAsNonRoot: true
             runAsUser: 1000
-          image: ghcr.io/verseghy/iam:v8
+          image: ghcr.io/verseghy/iam:0.0.15
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
