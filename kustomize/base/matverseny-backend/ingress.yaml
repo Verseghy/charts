@@ -11,6 +11,7 @@ metadata:
     app.kubernetes.io/name: matverseny-backend
     app.kubernetes.io/component: api
 spec:
+  ingressClassName: nginx
   tls:
     - hosts:
         - HOSTNAME
@@ -26,4 +27,3 @@ spec:
                 name: matverseny-backend
                 port:
                   number: 3002
-

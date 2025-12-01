@@ -8,6 +8,7 @@ metadata:
     app.kubernetes.io/name: iam
     app.kubernetes.io/component: api
 spec:
+  ingressClassName: nginx
   tls:
     - hosts:
         - HOSTNAME
@@ -30,4 +31,3 @@ spec:
                 name: iam
                 port:
                   number: 3001
-

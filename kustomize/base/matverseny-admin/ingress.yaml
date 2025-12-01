@@ -7,6 +7,7 @@ metadata:
   labels:
     app.kubernetes.io/name: matverseny-admin
 spec:
+  ingressClassName: nginx
   tls:
     - hosts:
         - HOSTNAME
@@ -22,4 +23,3 @@ spec:
                 name: matverseny-admin
                 port:
                   number: 80
-
