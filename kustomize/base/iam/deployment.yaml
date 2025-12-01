@@ -60,15 +60,23 @@ spec:
                   key: uri
             - name: IAM_AUDIT_FILE
               value: /var/log/iam-audit/audit.json
+            - name: IAM_SIGNING_KEY_FILE
+              value: /var/secrets/iam-signing/iam-signing.der
           volumeMounts:
             - name: iam-audit-logs
               mountPath: /var/log/iam-audit
+            - name: iam-signing
+              mountPath: /var/secrets/iam-signing
+              readOnly: true
           envFrom:
             - secretRef:
                 name: iam-jwt
       volumes:
         - name: iam-audit-logs
           emptyDir: {}
+        - name: iam-signing
+          secret:
+            secretName: iam-signing
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
