@@ -27,14 +27,13 @@ spec:
         fsGroup: 2000
       containers:
         - name: iam
-          securityContext: {}
-            # IAM needs to fix audit logs for this to be enabled
-            # capabilities:
-            #   drop:
-            #   - ALL
-            # readOnlyRootFilesystem: true
-            # runAsNonRoot: true
-            # runAsUser: 1000
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
           image: ghcr.io/verseghy/iam:v8
           imagePullPolicy: IfNotPresent
           ports:
@@ -59,9 +58,17 @@ spec:
                 secretKeyRef:
                   name: iam-postgres-pguser-iam
                   key: uri
+            - name: IAM_AUDIT_FILE
+              value: /var/log/iam-audit/audit.json
+          volumeMounts:
+            - name: iam-audit-logs
+              mountPath: /var/log/iam-audit
           envFrom:
             - secretRef:
                 name: iam-jwt
+      volumes:
+        - name: iam-audit-logs
+          emptyDir: {}
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
