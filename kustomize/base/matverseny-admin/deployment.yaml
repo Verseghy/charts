@@ -26,7 +26,7 @@ spec:
         - name: matverseny-admin
           # TODO: change this when https://github.com/Verseghy/verseghy-admin/issues/5 is resolved
           securityContext: {}
-          image: ghcr.io/verseghy/matverseny-admin:v6
+          image: ghcr.io/verseghy/matverseny-admin:v7
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
