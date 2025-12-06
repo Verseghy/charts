@@ -1,0 +1,4 @@
+- op: replace
+  path: /spec/template/spec/containers/0/env/3/value
+  value: iam.195.verseghy-gimnazium.net
+

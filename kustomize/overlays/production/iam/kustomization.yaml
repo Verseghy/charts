@@ -11,4 +11,8 @@ patches:
       kind: Ingress
       name: iam
     path: ingress-hostname-patch.yaml
+  - target:
+      kind: Deployment
+      name: iam
+    path: deployment-issuer-patch.yaml
 

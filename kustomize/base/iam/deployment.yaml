@@ -62,6 +62,8 @@ spec:
               value: /var/log/iam-audit/audit.json
             - name: IAM_SIGNING_KEY_FILE
               value: /var/secrets/iam-signing/iam-signing.der
+            - name: IAM_ISSUER_HOST
+              value: HOSTNAME
           volumeMounts:
             - name: iam-audit-logs
               mountPath: /var/log/iam-audit
@@ -69,6 +71,7 @@ spec:
               mountPath: /var/secrets/iam-signing
               readOnly: true
           envFrom:
+            # TODO: remove?
             - secretRef:
                 name: iam-jwt
       volumes:
