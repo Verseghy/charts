@@ -45,6 +45,16 @@ spec:
             httpGet:
               path: /
               port: http
+          volumeMounts:
+            - mountPath: /var/cache/nginx/client_temp
+              name: cache
+            - mountPath: /var/log/nginx
+              name: logs
+      volumes:
+        - name: cache
+          emptyDir: {}
+        - name: logs
+          emptyDir: {}
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
