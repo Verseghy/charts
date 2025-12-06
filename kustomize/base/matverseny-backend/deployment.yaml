@@ -34,7 +34,7 @@ spec:
             readOnlyRootFilesystem: true
             runAsNonRoot: true
             runAsUser: 1000
-          image: ghcr.io/verseghy/matverseny-backend:v7
+          image: ghcr.io/verseghy/matverseny-backend:v8
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

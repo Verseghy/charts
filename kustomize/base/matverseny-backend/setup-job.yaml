@@ -18,7 +18,7 @@ spec:
         fsGroup: 2000
       containers:
         - name: matverseny-backend-setup
-          image: ghcr.io/verseghy/matverseny-setup:v7
+          image: ghcr.io/verseghy/matverseny-setup:v8
           imagePullPolicy: IfNotPresent
           securityContext:
             capabilities:
