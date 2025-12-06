@@ -28,7 +28,7 @@ spec:
           securityContext:
             readOnlyRootFilesystem: false
             runAsNonRoot: false
-          image: ghcr.io/verseghy/matverseny-frontend:v2
+          image: ghcr.io/verseghy/matverseny-frontend:v3
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
