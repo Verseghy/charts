@@ -62,7 +62,7 @@ spec:
                   name: matverseny-app
                   key: iam_secret
             - name: NATS_URL
-              value: "nats"
+              value: "matverseny-nats"
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
