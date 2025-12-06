@@ -46,7 +46,7 @@ spec:
               path: /
               port: http
           volumeMounts:
-            - mountPath: /var/cache/nginx/client_temp
+            - mountPath: /var/lib/nginx/tmp/client_body
               name: cache
             - mountPath: /var/log/nginx
               name: logs
