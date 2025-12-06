@@ -47,11 +47,11 @@ spec:
               port: http
           volumeMounts:
             - mountPath: /var/lib/nginx/tmp/
-              name: nginx_tmp
+              name: nginx-tmp
             - mountPath: /var/log/nginx
               name: logs
       volumes:
-        - name: nginx_tmp
+        - name: nginx-tmp
           emptyDir: {}
         - name: logs
           emptyDir: {}
