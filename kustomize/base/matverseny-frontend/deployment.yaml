@@ -28,7 +28,8 @@ spec:
             capabilities:
               drop:
               - ALL
-            readOnlyRootFilesystem: true
+            # TODO: change this when https://github.com/Verseghy/matverseny-frontend/issues/15 is resolved
+            readOnlyRootFilesystem: false
             runAsNonRoot: true
             runAsUser: 1000
           image: ghcr.io/verseghy/matverseny-frontend:v3
