@@ -18,7 +18,7 @@ spec:
         fsGroup: 2000
       containers:
         - name: iam-migration
-          image: ghcr.io/verseghy/iam-migration:0.0.15
+          image: ghcr.io/verseghy/iam-migration:0.0.16
           imagePullPolicy: IfNotPresent
           securityContext:
             capabilities:
